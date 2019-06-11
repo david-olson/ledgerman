@@ -12,7 +12,7 @@ class MetaType extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'public',
+        'name', 'public', 'display_name'
     ];
 
     public function gameMeta()

@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserMeta;
+
+use App\User;
+use App\UserMeta;
+use App\MetaType;
 
 class UserMetaController extends Controller
 {
@@ -32,9 +37,15 @@ class UserMetaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserMeta $request)
     {
-        //
+        $data = $request->all();
+        if ($userMeta = UserMeta::create($data)) {
+            return response($userMeta, 200);
+        }
+        return response([
+            'msg' => 'There was an error creating the meta'
+        ], 409);
     }
 
     /**

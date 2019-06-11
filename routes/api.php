@@ -24,25 +24,27 @@ Route::middleware('auth:api')->group(function() {
 	/**
 	 * Users
 	 */
-	Route::get('/user/{id}', 'UserController@show');
-	Route::patch('/user/{id}/meta/{metaId}', 'UserMetaController@update');
-	Route::get('/user/{id}/friends', 'FriendController@show');
-	Route::get('/user/{id}/requests', 'UserRequestController@show');
-	Route::post('/user/{id}/requests', 'UserRequestController@store');
-	Route::patch('/user/{id}/requests/{requestId}', 'UserRequestController@update');
-	Route::delete('/user/{id}/requests/{requestId}', 'UserRequestController@destroy');
-	Route::get('/user/{id}/stats', 'UserController@stats');
-	Route::get('/user/{id}/badges', 'UserController@badges');
-	Route::post('/user/{id}/badges', 'UserBadgeController@store');
+	Route::post('/user/meta', 'UserMetaController@store');
+	Route::get('/user/{user}', 'UserController@show');
+	Route::get('/user/{user}/meta', 'UserMetaController@index');
+	Route::patch('/user/{user}/meta/{metaId}', 'UserMetaController@update');
+	Route::get('/user/{user}/friends', 'FriendController@show');
+	Route::get('/user/{user}/requests', 'UserRequestController@show');
+	Route::post('/user/{user}/requests', 'UserRequestController@store');
+	Route::patch('/user/{user}/requests/{requestId}', 'UserRequestController@update');
+	Route::delete('/user/{user}/requests/{requestId}', 'UserRequestController@destroy');
+	Route::get('/user/{user}/stats', 'UserController@stats');
+	Route::get('/user/{user}/badges', 'UserController@badges');
+	Route::post('/user/{user}/badges', 'UserBadgeController@store');
 
 	/**
 	 * Meta Types
 	 */
 	Route::get('/meta', 'MetaTypeController@index');
-	Route::get('/meta/{id}', 'MetaTypeController@show');
+	Route::get('/meta/{metaType}', 'MetaTypeController@show');
 	Route::post('/meta', 'MetaTypeController@store');
-	Route::patch('/meta/{id}', 'MetaTypeController@update');
-	Route::delete('/meta/{id}', 'MetaTypeController@destroy');
+	Route::patch('/meta/{metaType}', 'MetaTypeController@update');
+	Route::delete('/meta/{metaType}', 'MetaTypeController@destroy');
 
 	/**
 	 * Games

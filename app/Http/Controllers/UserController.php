@@ -54,4 +54,15 @@ class UserController extends Controller
 	    $success['name'] =  $user->name;
 		return response()->json(['success'=>$success], $this-> successStatus); 
 	}
+
+	/**
+	 * Returns the requested user resource
+	 * 
+	 * @param   $user \App\User
+	 * @return  \Illuminate\Http\Response
+	 */
+	public function show(User $user)
+	{
+		return $user;
+	}
 }

@@ -16,6 +16,7 @@ class CreateMetaTypesTable extends Migration
         Schema::create('meta_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('name');
+            $table->text('display_name');
             $table->boolean('public');
             $table->timestamps();
         });

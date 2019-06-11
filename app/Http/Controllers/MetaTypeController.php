@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreMetaType;
+
+use App\MetaType;
 
 class MetaTypeController extends Controller
 {
@@ -32,9 +35,17 @@ class MetaTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMetaType $request)
     {
-        //
+        $data = $request->all();
+
+        // dd($data);
+        if ($metaType = MetaType::create($data)) {
+            return response($metaType, 200);
+        }
+        return response([
+            'msg' => 'There was an error.'
+        ], 409);
     }
 
     /**
