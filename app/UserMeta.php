@@ -22,6 +22,6 @@ class UserMeta extends Model
 
     public function metaType()
     {
-    	return $this->hasOne(App\MetaType::class);
+    	return $this->belongsTo(MetaType::class);
     }
 }

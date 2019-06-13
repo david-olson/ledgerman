@@ -13,12 +13,13 @@ class UserMetaController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * 
+     * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        //
+        return response($user->userMeta, 200);
     }
 
     /**
@@ -34,7 +35,7 @@ class UserMetaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreUserMeta  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreUserMeta $request)
@@ -74,12 +75,22 @@ class UserMetaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  App\User $user
+     * @param  App\UserMeta $userMeta
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user, UserMeta $userMeta)
     {
-        //
+        if ($meta = $user->userMeta()->find($userMeta->id)) {
+            $data = $request->all();
+            $userMeta->contents = $data['contents'];
+            if ($userMeta->save()) {
+                return response($userMeta, 200);
+            }
+        }
+        return response([
+            'msg' => 'This meta does not belong to this user.'
+        ], 401);
     }
 
     /**

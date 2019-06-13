@@ -18,8 +18,8 @@ class CreateUserRequestsTable extends Migration
             $table->bigInteger('sender_id')->unsigned();
             $table->bigInteger('reciever_id')->unsigned();
             $table->dateTime('expires_at');
-            $table->dateTime('accepted_at');
-            $table->dateTime('rejected_at');
+            $table->dateTime('accepted_at')->nullable();
+            $table->dateTime('rejected_at')->nullable();
             $table->timestamps();
         });
     }

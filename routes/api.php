@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 
+use App\Http\Middleware\IsAdmin;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,17 +27,27 @@ Route::middleware('auth:api')->group(function() {
 	 * Users
 	 */
 	Route::post('/user/meta', 'UserMetaController@store');
+	Route::get('/user/friends', 'FriendController@index');
+	Route::get('/user/{user}/friends', 'FriendController@show');
 	Route::get('/user/{user}', 'UserController@show');
 	Route::get('/user/{user}/meta', 'UserMetaController@index');
-	Route::patch('/user/{user}/meta/{metaId}', 'UserMetaController@update');
-	Route::get('/user/{user}/friends', 'FriendController@show');
-	Route::get('/user/{user}/requests', 'UserRequestController@show');
+	Route::patch('/user/{user}/meta/{userMeta}', 'UserMetaController@update');
+	Route::get('/user/requests/recieved', 'UserRequestController@show');
+	Route::get('/user/requests/sent', 'UserRequestController@index');
 	Route::post('/user/{user}/requests', 'UserRequestController@store');
-	Route::patch('/user/{user}/requests/{requestId}', 'UserRequestController@update');
-	Route::delete('/user/{user}/requests/{requestId}', 'UserRequestController@destroy');
+	Route::patch('/user/requests/{userRequest}', 'UserRequestController@update');
+	Route::delete('/user/{user}/requests/{userRequest}', 'UserRequestController@destroy');
 	Route::get('/user/{user}/stats', 'UserController@stats');
 	Route::get('/user/{user}/badges', 'UserController@badges');
 	Route::post('/user/{user}/badges', 'UserBadgeController@store');
+
+	/**
+	 * Admin User Control
+	 */
+	Route::middleware(IsAdmin::class)->group(function() {
+		Route::get('/user/{user}/requests/sent', 'AdminUserRequestController@sent');
+		Route::get('/user/{user}/requests/recieved', 'AdminUserRequestController@recieved');
+	});
 
 	/**
 	 * Meta Types

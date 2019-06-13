@@ -17,17 +17,18 @@ class UserRequest extends Model
 
     protected $casts = [
     	'expires_at' => 'datetime',
-    	'accepted_at' => 'datetime'
+    	'accepted_at' => 'datetime',
+        'rejected_at' => 'datetime',
     ];
 
     public function sender()
     {
-    	return $this->hasOne(App\User::class, 'id', 'sender_id');
+    	return $this->hasOne(User::class, 'id', 'sender_id');
     }
 
     public function reciever()
     {
-    	return $this->hasOne(App\User::class, 'id', 'reciever_id');
+    	return $this->hasOne(User::class, 'id', 'reciever_id');
     }
 
 }

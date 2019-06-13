@@ -31,36 +31,36 @@ class User extends Authenticatable
     public function friends()
     {
         //TODO Figure out how to add pivot info
-        return $this->belongsToMany(App\User::class, 'user_id', 'id');
+        return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id');
     }
 
     public function recievedRequests()
     {
-        return $this->hasMany(App\UserRequest::class, 'reciever_id', 'id');
+        return $this->hasMany(UserRequest::class, 'reciever_id', 'id')->with(['sender', 'reciever']);
     }
 
     public function sentRequests()
     {
-        return $this->hasMany(App\UserRequests::class, 'sender_id', 'id');
+        return $this->hasMany(UserRequest::class, 'sender_id', 'id')->with(['sender', 'reciever']);
     }
 
     public function scores()
     {
-        return $this->hasMany(App\Score::class);
+        return $this->hasMany(Score::class);
     }
 
     public function results()
     {
-        return $this->hasMany(App\Result::class);
+        return $this->hasMany(Result::class);
     }
 
     public function badges()
     {
-        return $this->belongsToMany(App\Badge::class);
+        return $this->belongsToMany(Badge::class);
     }
 
     public function userMeta()
     {
-        return $this->hasMany(App\UserMeta::class);
+        return $this->hasMany(UserMeta::class)->with('metaType');
     }
 }
