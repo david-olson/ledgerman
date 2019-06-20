@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+
 use App\User;
 use Illuminate\Support\Facades\Auth; 
 use Validator;
@@ -65,4 +68,27 @@ class UserController extends Controller
 	{
 		return $user;
 	}
+
+	public function update(UpdateUserRequest $request)
+	{
+		$user = Auth::user();
+
+		$data = $request->all();
+
+		if (array_key_exists('password', $data)) {
+			$data['password'] = bcrypt($data['password']);
+		}
+
+		if ($user->update($data)) {
+			return response([
+				'msg' => 'You have updated your info successfully.',
+				'user' => $user
+			], 200);
+		}
+
+		return response([
+			'msg' => 'There was an error updating your user'
+		], 409);
+	}
+	
 }

@@ -16,7 +16,7 @@ class MetaTypeController extends Controller
      */
     public function index()
     {
-        //
+        return response(MetaType::all(), 200);
     }
 
     /**
@@ -51,12 +51,12 @@ class MetaTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\MetaType
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(MetaType $metaType)
     {
-        //
+        return response($metaType, 200);
     }
 
     /**

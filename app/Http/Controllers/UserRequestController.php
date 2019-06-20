@@ -135,6 +135,10 @@ class UserRequestController extends Controller
      */
     public function destroy(UserRequest $userRequest)
     {
-        //
+        $userRequest->delete();
+
+        return response([
+            'msg' => 'Request deleted.'
+        ], 200);
     }
 }

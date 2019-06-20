@@ -26,37 +26,42 @@ Route::middleware('auth:api')->group(function() {
 	/**
 	 * Users
 	 */
+	Route::patch('/user', 'UserController@update');
 	Route::post('/user/meta', 'UserMetaController@store');
 	Route::get('/user/friends', 'FriendController@index');
-	Route::get('/user/{user}/friends', 'FriendController@show');
-	Route::get('/user/{user}', 'UserController@show');
-	Route::get('/user/{user}/meta', 'UserMetaController@index');
-	Route::patch('/user/{user}/meta/{userMeta}', 'UserMetaController@update');
 	Route::get('/user/requests/recieved', 'UserRequestController@show');
 	Route::get('/user/requests/sent', 'UserRequestController@index');
 	Route::post('/user/{user}/requests', 'UserRequestController@store');
 	Route::patch('/user/requests/{userRequest}', 'UserRequestController@update');
-	Route::delete('/user/{user}/requests/{userRequest}', 'UserRequestController@destroy');
+	Route::delete('/user/requests/{userRequest}', 'UserRequestController@destroy');
+	Route::get('/user/{user}/friends', 'FriendController@show');
+	Route::get('/user/{user}', 'UserController@show');
+	Route::get('/user/{user}/meta', 'UserMetaController@index');
+
 	Route::get('/user/{user}/stats', 'UserController@stats');
 	Route::get('/user/{user}/badges', 'UserController@badges');
 	Route::post('/user/{user}/badges', 'UserBadgeController@store');
 
-	/**
-	 * Admin User Control
-	 */
+	
 	Route::middleware(IsAdmin::class)->group(function() {
+		/**
+		 * Admin User Control
+		 */
+		Route::post('/user', 'AdminUserController@store');
+		Route::patch('/user/{user}', 'AdminUserController@update');
 		Route::get('/user/{user}/requests/sent', 'AdminUserRequestController@sent');
 		Route::get('/user/{user}/requests/recieved', 'AdminUserRequestController@recieved');
-	});
+		Route::patch('/user/{user}/meta/{userMeta}', 'UserMetaController@update');
 
-	/**
-	 * Meta Types
-	 */
-	Route::get('/meta', 'MetaTypeController@index');
-	Route::get('/meta/{metaType}', 'MetaTypeController@show');
-	Route::post('/meta', 'MetaTypeController@store');
-	Route::patch('/meta/{metaType}', 'MetaTypeController@update');
-	Route::delete('/meta/{metaType}', 'MetaTypeController@destroy');
+		/**
+		 * Meta Types
+		 */
+		Route::get('/meta', 'MetaTypeController@index');
+		Route::get('/meta/{metaType}', 'MetaTypeController@show');
+		Route::post('/meta', 'MetaTypeController@store');
+		Route::patch('/meta/{metaType}', 'MetaTypeController@update');
+		Route::delete('/meta/{metaType}', 'MetaTypeController@destroy');
+	});
 
 	/**
 	 * Games
