@@ -61,36 +61,48 @@ Route::middleware('auth:api')->group(function() {
 		Route::post('/meta', 'MetaTypeController@store');
 		Route::patch('/meta/{metaType}', 'MetaTypeController@update');
 		Route::delete('/meta/{metaType}', 'MetaTypeController@destroy');
+
+		/**
+		 * Games
+		 */
+		Route::post('/games', 'GameController@store');
+		Route::patch('/games/{id}', 'GameController@update');
+		Route::delete('/games/{id}', 'GameController@destroy');
+
+		/**
+		 * Game Categories
+		 */
+		Route::post('/categories', 'GameCategoryController@store');
+		Route::patch('/categories/{gameCategory}', 'GameCategoryController@update');
+		Route::delete('/categories/{gameCategory}', 'GameCategoryController@destroy');
+
+		/**
+		 * Game Types
+		 */
+		Route::post('/types', 'GameTypeController@store');
+		Route::patch('/types/{id}', 'GameTypeController@update');
+		Route::delete('/types/{id}', 'GameTypeController@destroy');
 	});
 
 	/**
 	 * Games
 	 */
 	Route::get('/games', 'GameController@index');
-	Route::post('/games', 'GameController@store');
 	Route::get('/games/{id}', 'GameController@show');
-	Route::patch('/games/{id}', 'GameController@update');
-	Route::delete('/games/{id}', 'GameController@destroy');
 	Route::get('/games/{id}/stats', 'GameController@stats');
 
 	/**
 	 * Game Categories
 	 */
 	Route::get('/categories', 'GameCategoryController@index');
-	Route::post('/categories', 'GameCategoryController@store');
-	Route::get('/categories/{id}', 'GameCategoryController@show');
-	Route::patch('/categories/{id}', 'GameCategoryController@update');
-	Route::delete('/categories/{id}', 'GameCategoryController@destroy');
-	Route::get('/categories/{id}/games', 'GameCategoryFilterController@index');
+	Route::get('/categories/{gameCategory}', 'GameCategoryController@show');
+	Route::get('/categories/{gameCategory}/games', 'GameCategoryFilterController@index');
 
 	/**
 	 * Game Types
 	 */
 	Route::get('/types', 'GameTypeController@index');
-	Route::post('/types', 'GameTypeController@store');
 	Route::get('/types/{id}', 'GameTypeController@show');
-	Route::patch('/types/{id}', 'GameTypeController@update');
-	Route::delete('/types/{id}', 'GameTypeController@destroy');
 	Route::get('/types/{id}/games', 'GameTypeFilterController@index');	
 
 	/**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreMetaType;
+use App\Http\Requests\UpdateMetaType;
 
 use App\MetaType;
 
@@ -77,9 +78,19 @@ class MetaTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateMetaType $request, MetaType $metaType)
     {
-        //
+        $data = $request->all();
+        if ($metaType->update($data)) {
+            return response([
+                'msg' => 'Meta Type updated successfully',
+                'metaType' => $metaType
+            ], 200);
+        }
+
+        return response([
+            'msg' => 'There was an error.'
+        ], 409);
     }
 
     /**
@@ -88,8 +99,12 @@ class MetaTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(MetaType $metaType)
     {
-        //
+        $metaType->delete();
+
+        return response([
+            'msg' => 'Meta Type deleted.'
+        ], 200);
     }
 }
