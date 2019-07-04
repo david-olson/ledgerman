@@ -110,23 +110,23 @@ Route::middleware('auth:api')->group(function() {
 	 */
 	Route::get('/results', 'ResultController@index');
 	Route::post('/results', 'ResultController@store');
-	Route::get('/results/{id}', 'ResultController@show');
-	Route::patch('/results/{id}', 'ResultController@update');
-	Route::delete('/results/{id}', 'ResultController@destroy');
-	Route::get('/results/{id}/scores', 'ResultController@scores');
+	Route::get('/results/{result}', 'ResultController@show');
+	Route::patch('/results/{result}', 'ResultController@update');
+	Route::delete('/results/{result}', 'ResultController@destroy');
+	Route::get('/results/{result}/scores', 'ResultController@scores');
 
 	/**
 	 * Scores
 	 */
 	Route::get('/scores', 'ScoreController@index');
 	Route::post('/scores', 'ScoreController@store');
-	Route::get('/scores/{id}', 'ScoreController@show');
-	Route::patch('/scores/{id}', 'ScoreController@update');
-	Route::delete('/scores/{id}', 'ScoreController@destroy');
-	Route::get('/scores/{id}/meta', 'ScoreMetaController@show');
-	Route::post('/scores/{id}/meta', 'ScoreMetaController@store');
-	Route::patch('/scores/{id}/meta/{metaId}', 'ScoreMetaController@update');
-	Route::delete('/scores/{id}/meta/{metaId}', 'ScoreMetaController@destroy');
+	Route::get('/scores/{score}', 'ScoreController@show');
+	Route::patch('/scores/{score}', 'ScoreController@update');
+	Route::delete('/scores/{score}', 'ScoreController@destroy');
+	Route::get('/scores/{score}/meta', 'ScoreMetaController@show');
+	Route::post('/scores/{score}/meta', 'ScoreMetaController@store');
+	Route::patch('/scores/{score}/meta/{metaId}', 'ScoreMetaController@update');
+	Route::delete('/scores/{score}/meta/{metaId}', 'ScoreMetaController@destroy');
 
 	/**
 	 * Stats

@@ -4,6 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\GameCategory;
+use App\GameType;
+use App\Result;
+use App\GameMeta;
+
 class Game extends Model
 {
     /**
@@ -15,23 +20,25 @@ class Game extends Model
         'name', 'game_category_id', 'game_type_id', 'description',
     ];
 
+    protected $with = ['gameCategory', 'gameType', 'gameMeta'];
+
     public function gameCategory()
     {
-    	return $this->belongsTo(App\GameCategory::class);
+    	return $this->belongsTo(GameCategory::class);
     }
 
     public function gameType()
     {
-    	return $this->belongsTo(App\GameType::class);
+    	return $this->belongsTo(GameType::class);
     }
 
     public function results()
     {
-    	return $this->hasMany(App\Result::class);
+    	return $this->hasMany(Result::class);
     }
 
     public function gameMeta()
     {
-    	return $this->hasMany(App\GameMeta::class);
+    	return $this->hasMany(GameMeta::class);
     }
 }

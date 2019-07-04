@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Score;
+
+use App\Http\Requests\StoreScore;
+use App\Http\Requests\UpdateScore;
+
 class ScoreController extends Controller
 {
     /**
@@ -13,17 +18,7 @@ class ScoreController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response(Score::all(), 200);
     }
 
     /**
@@ -32,9 +27,19 @@ class ScoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreScore $request)
     {
-        //
+        $data = $request->all();
+
+        if ($score = Score::create($data)) {
+            $score->createMeta();
+            $score->result->setWinnerMeta();
+            return response($score, 201);
+        }
+
+        return response([
+            'msg' => 'Could not create score.'
+        ], 409);
     }
 
     /**
@@ -43,20 +48,9 @@ class ScoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Score $score)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response($score, 200);
     }
 
     /**
@@ -66,9 +60,17 @@ class ScoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateScore $request, Score $score)
     {
-        //
+        $data = $request->all();
+
+        if ($score->update($data)) {
+            return response($score, 200);
+        }
+
+        return response([
+            'msg' => 'Could not update score.'
+        ], 409);
     }
 
     /**
@@ -77,8 +79,12 @@ class ScoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Score $score)
     {
-        //
+        $score->delete();
+
+        return response([
+            'msg' => 'Score deleted'
+        ], 200);
     }
 }

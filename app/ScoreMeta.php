@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\MetaType;
+use App\Score;
+
 class ScoreMeta extends Model
 {
     /**
@@ -15,13 +18,15 @@ class ScoreMeta extends Model
         'score_id', 'meta_type_id', 'contents',
     ];
 
+    protected $with = ['metaType'];
+
     public function score()
     {
-    	return $this->belongsTo(App\Score::class);
+    	return $this->belongsTo(Score::class);
     }
 
     public function metaType()
     {
-    	return $this->hasOne(App\MetaType::class);
+    	return $this->belongsTo(MetaType::class);
     }
 }
