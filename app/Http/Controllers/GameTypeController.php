@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreGameType;
+
+use App\GameType;
 
 class GameTypeController extends Controller
 {
@@ -13,18 +16,9 @@ class GameTypeController extends Controller
      */
     public function index()
     {
-        //
+        return response(GameType::all(), 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -32,9 +26,25 @@ class GameTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreGameType $request)
     {
-        //
+        $data = $request->all();
+
+        $data['slug'] = str_slug($data['name']);
+
+        $request->merge(['slug' => $data['slug']]);
+
+        $this->validate($request, [
+            'slug' => 'unique:game_types'
+        ]);
+
+        if ($gameType = GameType::create($data)) {
+            return response($gameType, 201);
+        }
+
+        return response([
+            'msg' => 'Could not create game type.'
+        ], 409);
     }
 
     /**
@@ -43,9 +53,9 @@ class GameTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(GameType $gameType)
     {
-        //
+        return response($gameType, 200);
     }
 
     /**
@@ -66,9 +76,28 @@ class GameTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, GameType $gameType)
     {
-        //
+        $data = $request->all();
+
+        if (isset($data['name'])) {
+            $data['slug'] = str_slug($data['name']);
+
+            $request->merge(['slug' => $data['slug']]);
+
+            $this->validate($request, [
+                'slug' => 'required|unique:game_types'
+            ]);
+        }
+
+
+        if ($gameType->update($data)) {
+            return response($gameType, 200);
+        }
+
+        return response([
+            'msg' => 'Could not update the game type'
+        ], 409);
     }
 
     /**
@@ -77,8 +106,12 @@ class GameTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(GameType $gameType)
     {
-        //
+        $gameType->delete();
+
+        return response([
+            'msg' => 'Game type deleted'
+        ], 200);
     }
 }

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreGame;
+use App\Http\Requests\UpdateGame;
+
+use App\Game;
 
 class GameController extends Controller
 {
@@ -13,17 +17,7 @@ class GameController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response(Game::all(), 200);
     }
 
     /**
@@ -32,9 +26,17 @@ class GameController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreGame $request)
     {
-        //
+        $data = $request->all();
+
+        if ($game = Game::create($data)) {
+            return response($game, 201);
+        }
+
+        return response([
+            'msg' => 'Could not create game.'
+        ], 409);
     }
 
     /**
@@ -43,20 +45,9 @@ class GameController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Game $game)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response($game, 200);
     }
 
     /**
@@ -66,9 +57,17 @@ class GameController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateGame $request, Game $game)
     {
-        //
+        $data = $request->all();
+
+        if ($game->update($data)) {
+            return response($game, 200);
+        }
+
+        return response([
+            'msg' => 'Could not update game'
+        ], 409);
     }
 
     /**
@@ -77,8 +76,12 @@ class GameController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Game $game)
     {
-        //
+        $game->delete();
+
+        return response([
+            'msg' => 'Game deleted'
+        ], 200);
     }
 }

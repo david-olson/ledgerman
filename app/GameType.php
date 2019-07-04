@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Game;
 
 class GameType extends Model
 {
@@ -17,6 +18,6 @@ class GameType extends Model
 
     public function games()
     {
-    	return $this->hasMany(App\Game::class);
+    	return $this->hasMany(Game::class);
     }
 }

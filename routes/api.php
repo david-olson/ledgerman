@@ -66,8 +66,8 @@ Route::middleware('auth:api')->group(function() {
 		 * Games
 		 */
 		Route::post('/games', 'GameController@store');
-		Route::patch('/games/{id}', 'GameController@update');
-		Route::delete('/games/{id}', 'GameController@destroy');
+		Route::patch('/games/{game}', 'GameController@update');
+		Route::delete('/games/{game}', 'GameController@destroy');
 
 		/**
 		 * Game Categories
@@ -80,16 +80,16 @@ Route::middleware('auth:api')->group(function() {
 		 * Game Types
 		 */
 		Route::post('/types', 'GameTypeController@store');
-		Route::patch('/types/{id}', 'GameTypeController@update');
-		Route::delete('/types/{id}', 'GameTypeController@destroy');
+		Route::patch('/types/{gameType}', 'GameTypeController@update');
+		Route::delete('/types/{gameType}', 'GameTypeController@destroy');
 	});
 
 	/**
 	 * Games
 	 */
 	Route::get('/games', 'GameController@index');
-	Route::get('/games/{id}', 'GameController@show');
-	Route::get('/games/{id}/stats', 'GameController@stats');
+	Route::get('/games/{game}', 'GameController@show');
+	Route::get('/games/{game}/stats', 'GameController@stats');
 
 	/**
 	 * Game Categories
@@ -102,8 +102,8 @@ Route::middleware('auth:api')->group(function() {
 	 * Game Types
 	 */
 	Route::get('/types', 'GameTypeController@index');
-	Route::get('/types/{id}', 'GameTypeController@show');
-	Route::get('/types/{id}/games', 'GameTypeFilterController@index');	
+	Route::get('/types/{gameType}', 'GameTypeController@show');
+	Route::get('/types/{gameType}/games', 'GameTypeFilterController@index');	
 
 	/**
 	 * Results
