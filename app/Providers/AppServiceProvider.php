@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Score;
+use App\Result;
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +26,21 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Score::updated(function($score) {
+            $score->result->setWinnerMeta();
+        });
+
+        Score::created(function($score) {
+            $score->createMeta();
+            $score->result->setWinnerMeta();
+        });
+
+        Result::updated(function($result) {
+            $result->setWinnerMeta();
+        });
+
+        Result::created(function($result) {
+            $result->setWinnerMeta();
+        });
     }
 }

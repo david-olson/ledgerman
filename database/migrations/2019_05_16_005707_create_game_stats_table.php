@@ -18,9 +18,9 @@ class CreateGameStatsTable extends Migration
             $table->string('name');
             $table->string('display_name');
             $table->text('formula');
-            $table->string('before_text');
-            $table->string('after_text');
-            $table->integer('decimal_places');
+            $table->string('before_text')->nullable();
+            $table->string('after_text')->nullable();
+            $table->integer('decimal_places')->nullable();
             $table->timestamps();
         });
     }

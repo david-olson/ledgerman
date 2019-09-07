@@ -94,4 +94,20 @@ class ResultController extends Controller
     {
         return response($result->scores, 200);
     }
+
+    public function stat(Request $request, Result $result)
+    {
+        if ($request->has('stat_name')) {
+
+            $stat_name = $request->get('stat_name');
+
+            if ($result_stat = $result->{$stat_name}()) {
+                return response($result_stat, 200);    
+            }            
+
+            return response(['msg' => 'Couldn\'t get that stat.'], 404);
+        }   
+
+        return response(['msg' => 'You must provide a stat'], 409);
+    }
 }

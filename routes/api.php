@@ -82,6 +82,24 @@ Route::middleware('auth:api')->group(function() {
 		Route::post('/types', 'GameTypeController@store');
 		Route::patch('/types/{gameType}', 'GameTypeController@update');
 		Route::delete('/types/{gameType}', 'GameTypeController@destroy');
+
+		/**
+		 * User Stats
+		 */
+		Route::get('/user-stats', 'AdminUserStatController@index');
+		Route::post('/user-stats', 'AdminUserStatController@store');
+		Route::get('/user-stats/{id}', 'AdminUserStatController@show');
+		Route::patch('/user-stats/{id}', 'AdminUserStatController@update');
+		Route::delete('/user-stats/{id}', 'AdminUserStatController@destroy');
+
+		/**
+		 * Game Stats
+		 */
+		Route::get('/game-stats', 'AdminGameStatController@index');
+		Route::post('/game-stats', 'AdminGameStatController@store');
+		Route::patch('/game-stats/{gameStat}', 'AdminGameStatController@update');
+		Route::get('/game-stats/{gameStat}', 'AdminGameStatController@show');
+		Route::delete('/game-stats/{gameStat}', 'AdminGameStatController@destroy');	
 	});
 
 	/**
@@ -115,6 +133,8 @@ Route::middleware('auth:api')->group(function() {
 	Route::delete('/results/{result}', 'ResultController@destroy');
 	Route::get('/results/{result}/scores', 'ResultController@scores');
 
+	Route::get('/results/{result}/stat', 'ResultController@stat');
+
 	/**
 	 * Scores
 	 */
@@ -125,14 +145,14 @@ Route::middleware('auth:api')->group(function() {
 	Route::delete('/scores/{score}', 'ScoreController@destroy');
 	Route::get('/scores/{score}/meta', 'ScoreMetaController@show');
 	Route::post('/scores/{score}/meta', 'ScoreMetaController@store');
-	Route::patch('/scores/{score}/meta/{metaId}', 'ScoreMetaController@update');
-	Route::delete('/scores/{score}/meta/{metaId}', 'ScoreMetaController@destroy');
+	Route::patch('/scores/{score}/meta/{scoreMeta}', 'ScoreMetaController@update');
+	Route::delete('/scores/{score}/meta/{scoreMeta}', 'ScoreMetaController@destroy');
 
 	/**
 	 * Stats
 	 */
 	Route::get('/stats/games', 'GameStatController@index');
-	Route::get('/stats/games/{id}', 'GameStatController@show');
+	Route::get('/stats/games/{gameStat}', 'GameStatController@show');
 	Route::get('/stats/users', 'UserStatController@index');
 	Route::get('/stats/users/{id}', 'UserStatController@show');
 
@@ -146,22 +166,6 @@ Route::middleware('auth:api')->group(function() {
 	Route::delete('/badges/{id}', 'BadgeController@destroy');
 	Route::get('/badges/{id}/user', 'UserBadgeController@show');
 
-	/**
-	 * User Stats
-	 */
-	Route::get('/user-stats', 'AdminUserStatController@index');
-	Route::post('/user-stats', 'AdminUserStatController@store');
-	Route::get('/user-stats/{id}', 'AdminUserStatController@show');
-	Route::patch('/user-stats/{id}', 'AdminUserStatController@update');
-	Route::delete('/user-stats/{id}', 'AdminUserStatController@destroy');
-
-	/**
-	 * Game Stats
-	 */
-	Route::get('/game-stats', 'AdminGameStatController@index');
-	Route::post('/game-stats', 'AdminGameStatController@store');
-	Route::get('/game-stats/{id}', 'AdminGameStatController@show');
-	Route::patch('/game-stats/{id}', 'AdminGameStatController@update');
-	Route::delete('/game-stats/{id}', 'AdminGameStatController@destroy');	
+	
 
 });

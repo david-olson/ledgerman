@@ -63,4 +63,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserMeta::class)->with('metaType');
     }
+
+    public function standings()
+    {
+        return $this->hasManyThrough(Standing::class, Score::class);
+    }
 }

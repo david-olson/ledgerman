@@ -84,4 +84,13 @@ class GameController extends Controller
             'msg' => 'Game deleted'
         ], 200);
     }
+
+    public function stats(Game $game)
+    {
+        foreach ($game->gameStats as $stat) {
+            $stat->computed = $stat->computeStat($game);
+        }
+
+        return response($game->gameStats, 200);
+    }
 }

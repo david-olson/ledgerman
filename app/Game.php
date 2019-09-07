@@ -8,6 +8,8 @@ use App\GameCategory;
 use App\GameType;
 use App\Result;
 use App\GameMeta;
+use App\GameStat;
+use App\Game;
 
 class Game extends Model
 {
@@ -37,8 +39,18 @@ class Game extends Model
     	return $this->hasMany(Result::class);
     }
 
+    public function scores()
+    {
+        return $this->hasManyThrough(Game::class, Result::class);
+    }
+
     public function gameMeta()
     {
     	return $this->hasMany(GameMeta::class);
+    }
+
+    public function gameStats()
+    {
+        return $this->belongsToMany(GameStat::class);
     }
 }

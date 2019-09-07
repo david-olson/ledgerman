@@ -16,7 +16,7 @@ class CreateResultsTable extends Migration
         Schema::create('results', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('game_id')->unsigned();
-            $table->text('notes');
+            $table->text('notes')->nullable();
             $table->dateTime('played_at');
             $table->bigInteger('user_id')->unsigned();
             $table->timestamps();

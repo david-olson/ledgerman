@@ -32,8 +32,6 @@ class ScoreController extends Controller
         $data = $request->all();
 
         if ($score = Score::create($data)) {
-            $score->createMeta();
-            $score->result->setWinnerMeta();
             return response($score, 201);
         }
 

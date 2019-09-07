@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Result;
 use App\User;
 use App\ScoreMeta;
+use App\Standing;
 
 class Score extends Model
 {
@@ -47,5 +48,10 @@ class Score extends Model
                 'contents' => 0
             ]);
         }
+    }
+
+    public function standing()
+    {
+        return $this->hasOne(Standing::class);
     }
 }
