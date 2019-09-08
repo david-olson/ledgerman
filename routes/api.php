@@ -108,6 +108,7 @@ Route::middleware('auth:api')->group(function() {
 	Route::get('/games', 'GameController@index');
 	Route::get('/games/{game}', 'GameController@show');
 	Route::get('/games/{game}/stats', 'GameController@stats');
+	Route::get('/games/{game}/standings', 'StandingController@games');
 
 	/**
 	 * Game Categories
@@ -115,13 +116,15 @@ Route::middleware('auth:api')->group(function() {
 	Route::get('/categories', 'GameCategoryController@index');
 	Route::get('/categories/{gameCategory}', 'GameCategoryController@show');
 	Route::get('/categories/{gameCategory}/games', 'GameCategoryFilterController@index');
+	Route::get('/categories/{gameCategory}/standings', 'StandingController@gameCategories');
 
 	/**
 	 * Game Types
 	 */
 	Route::get('/types', 'GameTypeController@index');
 	Route::get('/types/{gameType}', 'GameTypeController@show');
-	Route::get('/types/{gameType}/games', 'GameTypeFilterController@index');	
+	Route::get('/types/{gameType}/games', 'GameTypeFilterController@index');
+	Route::get('/types/{gameType}/standings', 'StandingController@gameTypes');
 
 	/**
 	 * Results

@@ -70,33 +70,32 @@ class Result extends Model
         
     }
 
+    /**
+     * Creates the standings for a result
+     * Players get a half point per player defeated,
+     * rounded down to the nearest integer. Winners get
+     * a minimum of 1 point per victory.
+     */
     public function setResultStandings()
     {
         if ($this->scores->count() > 0) {
-            foreach ($this->scores as $score) {
+            $n = 0;
+            foreach ($this->scores()->orderBy('score', 'ASC')->get() as $score) {
                 if ($score->standing)
                     $score->standing->delete();
+                $standing_value = floor($n * 0.5);
+                if ($score->isWinner() && $standing_value < 1) {
+                    $standing_value = 1;
+                }
+                if ($standing_value > 0) {
+                    $standing_temp = Standing::create([
+                        'score' => $standing_value,
+                        'score_id' => $score->id,
+                    ]);    
+                }
+                
+                $n++;
             }
-
-            $player_count = $this->scores->count();
-
-            $winners = $this->winner();
-
-            $defeated_count = $player_count - $winners->count();
-
-            $standing_value = ceil($defeated_count * 0.5);
-
-            if ($standing_value == 0) {
-                $standing_value = 1;
-            }
-
-            foreach ($winners as $winner) {
-                $standing_temp = Standing::create([
-                    'score' => $standing_value,
-                    'score_id' => $winner->id
-                ]);
-            }
-
         }
     }
 

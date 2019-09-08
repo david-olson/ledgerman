@@ -7,6 +7,8 @@ use App\Game;
 
 class GameCategory extends Model
 {
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
+ 
     /**
      * The attributes that are mass assignable.
      *
@@ -19,5 +21,10 @@ class GameCategory extends Model
     public function games()
     {
     	return $this->hasMany(Game::class);
+    }
+
+    public function standings()
+    {
+        return $this->hasManyDeep(Standing::class, [Game::class, Result::class, Score::class]);
     }
 }

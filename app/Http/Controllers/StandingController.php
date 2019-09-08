@@ -5,60 +5,12 @@ namespace App\Http\Controllers;
 use App\Standing;
 use Illuminate\Http\Request;
 
+use App\Game;
+use App\GameCategory;
+use App\GameType;
+
 class StandingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Standing  $standing
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Standing $standing)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Standing  $standing
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Standing $standing)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -81,5 +33,20 @@ class StandingController extends Controller
     public function destroy(Standing $standing)
     {
         //
+    }
+
+    public function games(Game $game)
+    {
+        return response($game->standings, 200);
+    }
+
+    public function gameCategories(GameCategory $gameCategory)
+    {
+        return response($gameCategory->standings, 200);
+    }
+
+    public function gameTypes(GameType $gameType)
+    {
+        return response($gameType->standings, 200);
     }
 }

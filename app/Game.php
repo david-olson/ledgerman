@@ -13,6 +13,7 @@ use App\Game;
 
 class Game extends Model
 {
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
     /**
      * The attributes that are mass assignable.
      *
@@ -41,7 +42,7 @@ class Game extends Model
 
     public function scores()
     {
-        return $this->hasManyThrough(Game::class, Result::class);
+        return $this->hasManyThrough(Score::class, Result::class);
     }
 
     public function gameMeta()
@@ -52,5 +53,10 @@ class Game extends Model
     public function gameStats()
     {
         return $this->belongsToMany(GameStat::class);
+    }
+
+    public function standings()
+    {
+        return $this->hasManyDeep(Standing::class, [Result::class, Score::class]);
     }
 }

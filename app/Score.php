@@ -54,4 +54,11 @@ class Score extends Model
     {
         return $this->hasOne(Standing::class);
     }
+
+    public function isWinner()
+    {
+        return boolval($this->scoreMeta()->whereHas('metaType', function($metaType) {
+            $metaType->where('name', 'game_winner');
+        })->first()->contents);
+    }
 }
