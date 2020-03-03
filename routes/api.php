@@ -99,7 +99,13 @@ Route::middleware('auth:api')->group(function() {
 		Route::post('/game-stats', 'AdminGameStatController@store');
 		Route::patch('/game-stats/{gameStat}', 'AdminGameStatController@update');
 		Route::get('/game-stats/{gameStat}', 'AdminGameStatController@show');
-		Route::delete('/game-stats/{gameStat}', 'AdminGameStatController@destroy');	
+		Route::delete('/game-stats/{gameStat}', 'AdminGameStatController@destroy');
+
+		/**
+		 * Stanings
+		 */
+		Route::get('/standings', 'AdminStandingController@index');
+		Route::patch('/standings/{standing}', 'AdminStandingController@update');	
 	});
 
 	/**

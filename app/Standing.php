@@ -44,4 +44,16 @@ class Standing extends Model
     {
     	return $this->belongsToThrough(GameType::class, [Game::class, Result::class, Score::class]);
     }
+
+    public function approve()
+    {
+        $this->is_approved = 1;
+        $this->save();
+    }
+
+    public function reject()
+    {
+        $this->is_approved = 0;
+        $this->save();
+    }
 }
